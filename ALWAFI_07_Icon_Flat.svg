@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="560" height="458" viewBox="0 0 560 458" role="img" aria-label="رمز المبنى — الوافي للمقاولات العامة"><defs><linearGradient id="goldFoil" x1="0" y1="0" x2="1" y2=".75" objectBoundingBox="true"><stop offset="0" stop-color="#FFF3D7"/><stop offset=".24" stop-color="#E9C787"/><stop offset=".5" stop-color="#B9893E"/><stop offset=".73" stop-color="#F6DDA5"/><stop offset="1" stop-color="#B9893E"/></linearGradient><linearGradient id="navySheen" x1="0" y1="0" x2="1" y2="1" objectBoundingBox="true"><stop offset="0" stop-color="#17436A"/><stop offset=".65" stop-color="#071D37"/><stop offset="1" stop-color="#031225"/></linearGradient></defs><g id="alwafi-architecture" stroke-linejoin="miter">
+    <!-- Left three ascending wings -->
+    <path d="M37 303 87 261 87 416 37 416Z" fill="#071D37" stroke="#D7B475" stroke-width="5"/>
+    <path d="M91 260 140 226 140 416 91 416Z" fill="#D7B475"/>
+    <path d="M148 185 210 138 210 286 148 369Z" fill="#071D37" stroke="#D7B475" stroke-width="5"/>
+    <!-- Center tower and upper crown -->
+    <path d="M217 79 286 28 286 192 217 158Z" fill="#071D37" stroke="#D7B475" stroke-width="5"/>
+    <path d="M294 28 352 74 352 209 294 187Z" fill="#D7B475"/>
+    <path d="M358 107 417 152 417 276 358 236Z" fill="#071D37" stroke="#D7B475" stroke-width="5"/>
+    <!-- Right side towers -->
+    <path d="M422 208 464 238 464 371 422 316Z" fill="#D7B475"/>
+    <path d="M473 273 515 307 515 416 473 416Z" fill="#071D37" stroke="#D7B475" stroke-width="5"/>
+    <!-- Golden diagonal structural beam echoes original reference -->
+    <path d="M214 155 420 291 420 354 214 210Z" fill="#D7B475"/>
+    <path d="M214 155 420 291" fill="none" stroke="#D7B475" stroke-width="7"/>
+    <!-- Core building-shaped A, with generous, unbroken negative space -->
+    <path d="M91 417 234 217 354 303 466 417 382 417 286 316 238 273 167 417Z" fill="#071D37" stroke="#D7B475" stroke-width="6"/>
+    <!-- Original characteristic portal triangle and gold sill -->
+    <path d="M231 366 268 302 307 366Z" fill="#FFFFFF"/>
+    <path d="M225 370 309 370 323 394 211 394Z" fill="#D7B475"/>
+    <path d="M218 402 317 402" stroke="#071D37" stroke-width="5"/>
+    <!-- Small gold finishing seams -->
+    <path d="M294 32 294 187 M143 225 143 350 M469 271 469 399" stroke="#D7B475" stroke-width="3" opacity=".9"/>
+    </g></svg>

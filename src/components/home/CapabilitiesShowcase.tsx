@@ -1,0 +1,8 @@
+import Image from "next/image";
+import { brand } from "@/config/brand";
+import { approval } from "@/content/site";
+import { SectionHeading, TextLink } from "@/components/ui/elements";
+
+export function CapabilitiesShowcase() {
+  return <section className="section capabilities"><div className="container"><div className="section-top" data-reveal><SectionHeading eyebrow="آفاق البناء" english="SPACES WITH PURPOSE" title={<>من اتساع الرؤية،<br />إلى أدقّ التفاصيل.</>} /><div className="capabilities-intro"><p>نقرأ المكان كوحدة متكاملة؛ مبنى ومحيطًا، بنية وتفصيلًا. هذه صور تعبيرية تستلهم مجالات البناء المقترحة.</p><TextLink href="/services">استكشف مجالات الأعمال</TextLink></div></div><div className="capability-images" data-reveal><figure className="capability-large"><Image src={brand.images.architecture} fill alt="مشهد تعبيري يجمع واجهات معمارية حجرية وزجاجية وأفقًا عمرانيًا" sizes="(min-width: 768px) 65vw, 100vw" /><figcaption><span className="index">01</span><span>رؤية عمرانية متكاملة</span><span lang="en">BUILT ENVIRONMENTS</span></figcaption></figure><figure className="capability-small"><Image src={brand.images.hero} fill alt="تفاصيل تعبيرية لواجهة حجرية ومشربية معمارية مضاءة" sizes="(min-width: 768px) 32vw, 100vw" /><figcaption><span className="index">02</span><span>التفاصيل تصنع الهوية</span></figcaption></figure><div className="capability-drawing" aria-hidden="true"><svg viewBox="0 0 300 130" fill="none"><path d="M1 125h298M30 125V55l45-25v95M75 125V30l45 25v70M135 125V5l45 25v95M180 125V30l45 25v70M240 125V65l45 25v35M30 55l90 50M135 5l90 50" stroke="currentColor" /></svg><span lang="en">FORM / MATERIAL / PURPOSE</span></div></div><p className="image-disclaimer">{approval.imagery}</p></div></section>;
+}

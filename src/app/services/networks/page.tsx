@@ -1,0 +1,14 @@
+import Link from "next/link";
+import { ChevronLeft } from "lucide-react";
+import { Button, Eyebrow, SectionHeading } from "@/components/ui/elements";
+import { NetworkDiagram } from "@/components/networks/NetworkDiagram";
+import { NetworkCapabilities } from "@/components/networks/NetworkCapabilities";
+import { WorkProcess } from "@/components/home/WorkProcess";
+import { ContactCTA } from "@/components/contact/ContactCTA";
+import { approval } from "@/content/site";
+import { pageMetadata } from "@/lib/seo";
+
+export const metadata = pageMetadata("الشبكات والبنية التحتية", "استكشف المجالات المقترحة لشبكات المياه والصرف والتصريف والري ومسارات الخدمات، ضمن رؤية متكاملة للبنية الأساسية.", "/services/networks");
+export default function NetworksPage() {
+  return <><section className="network-page-hero"><div className="container"><nav className="breadcrumbs" aria-label="مسار الصفحة"><Link href="/">الرئيسية</Link><ChevronLeft size={14} aria-hidden="true" /><Link href="/services">خدماتنا</Link><ChevronLeft size={14} aria-hidden="true" /><span aria-current="page">الشبكات</span></nav><div className="network-hero-grid"><div data-hero-reveal><Eyebrow light english="ENGINEERING CONNECTIONS">الشبكات والبنية التحتية</Eyebrow><h1>تحت كل إنجاز،<br /><span>أساس مترابط.</span></h1><p>المكان لا يكتمل بما نراه فقط. تحت السطح، تتقاطع مسارات الخدمات لتمنح البيئة العمرانية قدرتها على الحياة.</p><Button href="#network-capabilities">استكشف المجالات</Button></div><div data-hero-reveal><NetworkDiagram /></div></div><div className="network-hero-bottom"><span>المياه · الصرف · تصريف الأمطار · الري · مسارات الخدمات</span><span lang="en" dir="ltr">SYSTEMS THAT CONNECT PLACES.</span></div></div></section><section id="network-capabilities" className="section network-capabilities-section"><div className="container"><SectionHeading eyebrow="مجالات الشبكات المقترحة" english="BELOW THE SURFACE" title={<>تخصصات تتكامل.<br />لتعمل التفاصيل معًا.</>}>مسارات مختلفة، وغاية واحدة: بنية أساسية تُقرأ كوحدة متكاملة.</SectionHeading><p className="approval-note network-page-note">{approval.networks}</p><div data-reveal><NetworkCapabilities /></div></div></section><section className="network-principles"><div className="container network-principles-grid"><div><Eyebrow light english="THOUGHT BEFORE ACTION">قراءة هندسية للمكان</Eyebrow><h2>التنسيق يبدأ<br />قبل أول مسار.</h2></div><div><p>مراجعة المخططات، وفهم المناسيب، والتنسيق بين التخصصات؛ نقاط انطلاق لتصوّر نطاق الشبكات الذي يناسب كل مشروع.</p><p>تُراجع التفاصيل الفنية والأعمال المدنية والاشتراطات ذات العلاقة قبل اعتماد أي نطاق عمل. وتُحدَّد مسؤوليات الأطراف ومتطلبات الفحص والتسليم ضمن الاتفاق الخاص بالمشروع.</p><Button href="/contact" variant="outline">ناقش متطلبات الشبكات</Button></div></div></section><WorkProcess network /><ContactCTA network /></>;
+}
