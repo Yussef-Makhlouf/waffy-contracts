@@ -1,7 +1,9 @@
 import type { MetadataRoute } from "next";
-import { siteOrigin } from "@/lib/seo";
+import { siteOrigin, siteIndexable } from "@/lib/seo";
+import { searchPages, searchPaths } from "@/content/search";
+import { publicUrl } from "@/lib/search-utils";
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  if (!siteOrigin) return [];
-  return ["/", "/services", "/services/networks", "/services/network-it", "/contact"].map(path => ({ url: `${siteOrigin}${path}`, changeFrequency: "monthly", priority: path === "/" ? 1 : 0.8 }));
+  if (!siteOrigin || !siteIndexable) return [];
+  return searchPaths.map(path => ({ url: publicUrl(siteOrigin, path)!, lastModified: searchPages[path].updated }));
 }

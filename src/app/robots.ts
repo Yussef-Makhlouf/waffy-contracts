@@ -1,6 +1,8 @@
 import type { MetadataRoute } from "next";
-import { siteOrigin } from "@/lib/seo";
+import { siteOrigin, siteIndexable } from "@/lib/seo";
 
 export default function robots(): MetadataRoute.Robots {
-  return siteOrigin ? { rules: { userAgent: "*", allow: "/" }, sitemap: `${siteOrigin}/sitemap.xml` } : { rules: { userAgent: "*", disallow: "/" } };
+  return siteOrigin && siteIndexable
+    ? { rules: { userAgent: "*", allow: "/" }, sitemap: `${siteOrigin}/sitemap.xml` }
+    : { rules: { userAgent: "*", disallow: "/" } };
 }

@@ -5,7 +5,9 @@ import { Footer } from "@/components/layout/Footer";
 import { FloatingContactActions } from "@/components/layout/FloatingContactActions";
 import { MotionRoot } from "@/components/ui/MotionRoot";
 import { brand } from "@/config/brand";
-import { siteOrigin } from "@/lib/seo";
+import { siteOrigin, searchRobots } from "@/lib/seo";
+import { siteStructuredData } from "@/lib/structured-data";
+import { serializeJsonLd } from "@/lib/search-utils";
 import "./globals.css";
 
 const arabic = localFont({
@@ -21,11 +23,14 @@ export const metadata: Metadata = {
   description: "الوافي للمقاولات العامة — نبني الثقة ونترك الأثر. اكتشف مجالات البناء والبنية التحتية والأعمال المعمارية.",
   ...(siteOrigin ? { metadataBase: new URL(siteOrigin) } : {}),
   applicationName: brand.name,
-  robots: { index: Boolean(siteOrigin), follow: true },
+  robots: searchRobots,
+  verification: {
+    ...(process.env.GOOGLE_SITE_VERIFICATION ? { google: process.env.GOOGLE_SITE_VERIFICATION } : {}),
+    ...(process.env.BING_SITE_VERIFICATION ? { other: { "msvalidate.01": process.env.BING_SITE_VERIFICATION } } : {}),
+  },
 };
 export const viewport: Viewport = { width: "device-width", initialScale: 1, themeColor: "#071D37", viewportFit: "cover" };
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
-  const structuredData = { "@context": "https://schema.org", "@type": "Organization", name: brand.name, alternateName: brand.englishName, ...(siteOrigin ? { url: siteOrigin, logo: `${siteOrigin}${brand.logo.light}` } : {}) };
-  return <html lang="ar" dir="rtl" className={`${arabic.variable} ${latin.variable}`}><body><a className="skip-link" href="#main-content">تجاوز إلى المحتوى</a><Header /><MotionRoot><main id="main-content" tabIndex={-1}>{children}</main></MotionRoot><Footer /><FloatingContactActions /><script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData).replace(/</g, "\\u003c") }} /></body></html>;
+  return <html lang="ar" dir="rtl" className={`${arabic.variable} ${latin.variable}`}><body><a className="skip-link" href="#main-content">تجاوز إلى المحتوى</a><Header /><MotionRoot><main id="main-content" tabIndex={-1}>{children}</main></MotionRoot><Footer /><FloatingContactActions /><script type="application/ld+json" data-site-schema dangerouslySetInnerHTML={{ __html: serializeJsonLd(siteStructuredData(siteOrigin)) }} /></body></html>;
 }

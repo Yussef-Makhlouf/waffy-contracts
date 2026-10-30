@@ -7,8 +7,10 @@ import { CapabilitiesShowcase } from "@/components/home/CapabilitiesShowcase";
 import { WorkProcess } from "@/components/home/WorkProcess";
 import { ContactCTA } from "@/components/contact/ContactCTA";
 import { pageMetadata } from "@/lib/seo";
+import { PageAnswers } from "@/components/search/PageAnswers";
+import { PageStructuredData } from "@/components/search/PageStructuredData";
 
-export const metadata = pageMetadata("نبني الثقة ونترك الأثر", "الوافي للمقاولات العامة. رؤية معمارية وقيمة راسخة عنوانها الالتزام. استكشف مجالات البناء والشبكات والأعمال المعمارية.", "/");
+export const metadata = pageMetadata("/");
 export default function HomePage() {
-  return <><Hero /><AboutPreview /><ServicesOverview /><HomeNetworkITSection /><NetworksShowcase /><CapabilitiesShowcase /><WorkProcess /><ContactCTA /></>;
+  return <><PageStructuredData path="/" /><Hero /><AboutPreview /><ServicesOverview /><HomeNetworkITSection /><NetworksShowcase /><CapabilitiesShowcase /><WorkProcess /><PageAnswers path="/" /><ContactCTA /></>;
 }

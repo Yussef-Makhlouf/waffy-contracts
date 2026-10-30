@@ -1,6 +1,7 @@
 import { getImageProps } from "next/image";
 import { brand } from "@/config/brand";
-import { Button, EmblemRoofline, Eyebrow } from "@/components/ui/elements";
+import { searchPages } from "@/content/search";
+import { Button, EmblemHorizon, Eyebrow } from "@/components/ui/elements";
 
 export function Hero() {
   // Separate crops for portrait and landscape screens; only the matching one is downloaded.
@@ -9,20 +10,20 @@ export function Hero() {
   const { props: { srcSet: portrait, ...image } } = getImageProps({ ...common, src: brand.crops.heroPortrait, quality: 85 });
 
   return <section className="hero" aria-labelledby="hero-title">
-    <div className="hero-media emblem-mask">
+    <div className="hero-media">
       <picture>
         <source media="(min-width: 768px)" srcSet={landscape} sizes="100vw" />
         <img {...image} alt={common.alt} srcSet={portrait} className="hero-image" data-hero-image />
       </picture>
       <div className="hero-shade" aria-hidden="true" />
     </div>
-    <EmblemRoofline className="hero-roofline" />
+    <EmblemHorizon side="below" className="hero-horizon" />
     <div className="container hero-stage">
       <span className="hero-plumb" aria-hidden="true" data-rule="y" />
       <div className="hero-copy">
         <div data-hero-reveal><Eyebrow light english="ALWAFI GENERAL CONTRACTING">الوافي للمقاولات العامة</Eyebrow></div>
         <h1 id="hero-title" data-hero-reveal>نبني الثقة…<br /><span>ونترك الأثر.</span></h1>
-        <p data-hero-reveal>من طموح الفكرة إلى تفاصيل المكان. رؤية معمارية، وقيمة راسخة عنوانها الالتزام.</p>
+        <p data-hero-reveal>{searchPages["/"].summary}</p>
         <div className="hero-actions" data-hero-reveal><Button href="/services">اكتشف خدماتنا</Button><Button href="/contact" variant="glass">تواصل معنا</Button></div>
       </div>
       <div className="hero-plate glass" data-hero-reveal>

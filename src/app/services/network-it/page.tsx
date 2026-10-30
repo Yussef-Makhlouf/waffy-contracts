@@ -3,9 +3,12 @@ import Link from "next/link";
 import { ArrowLeftIcon, ArrowTopLeftIcon, CheckIcon, ChevronLeftIcon, Component1Icon, DesktopIcon, LockClosedIcon, PlusIcon, Share2Icon } from "@radix-ui/react-icons";
 import { networkIT, itServiceGroups, itDeliverables, itBuildingTypes, itWorkSteps, itFAQs } from "@/content/network-it";
 import { pageMetadata } from "@/lib/seo";
+import { searchPages } from "@/content/search";
+import { RelatedPages } from "@/components/search/PageAnswers";
+import { PageStructuredData } from "@/components/search/PageStructuredData";
 import styles from "./network-it.module.css";
 
-export const metadata = pageMetadata(networkIT.title, networkIT.description, networkIT.route);
+export const metadata = pageMetadata("/services/network-it");
 
 const serviceIcons = { cabling: Share2Icon, connectivity: Component1Icon, rooms: DesktopIcon, systems: LockClosedIcon };
 
@@ -19,6 +22,7 @@ function Action({ href, children, outline = false }: { href: string; children: R
 
 export default function NetworkITPage() {
   return <div className={styles.page}>
+    <PageStructuredData path="/services/network-it" />
     <section className="relative overflow-clip bg-ivory pt-28 md:pt-36" aria-labelledby="it-page-title">
       <div className="container">
         <nav className="mb-7 flex flex-wrap items-center gap-2 text-[11px] text-[#586371] md:mb-10" aria-label="مسار الصفحة"><Link className="inline-flex min-h-11 min-w-11 items-center" href="/">الرئيسية</Link><ChevronLeftIcon aria-hidden="true" /><Link className="inline-flex min-h-11 min-w-11 items-center" href="/services">خدماتنا</Link><ChevronLeftIcon aria-hidden="true" /><span aria-current="page">الشبكات وتقنية المعلومات</span></nav>
@@ -26,7 +30,7 @@ export default function NetworkITPage() {
           <div className="max-w-xl" data-hero-reveal>
             <Label english="NETWORK & IT CONTRACTING">حلول تقنية تبدأ من المخطط</Label>
             <h1 id="it-page-title" className="text-[35px] font-medium leading-[1.65] text-navy min-[390px]:text-[39px] md:text-[44px] lg:text-[56px]">البنية التي تصل<br /><span className="text-[#846333]">كل تفاصيل مشروعك.</span></h1>
-            <p className="mt-6 max-w-[32rem] text-[15px] leading-[2.15] text-[#586371] md:mt-7 md:text-base">شبكات وتقنية معلومات تُخطَّط مع المبنى؛ من مسارات الكابلات ونقاط البيانات، إلى غرف الاتصالات والأنظمة التي يحتاجها المكان ليعمل.</p>
+            <p className="mt-6 max-w-[32rem] text-[15px] leading-[2.15] text-[#586371] md:mt-7 md:text-base">{searchPages["/services/network-it"].summary}</p>
             <div className="mt-8 flex flex-wrap gap-3 md:mt-10"><Action href="#it-services">استكشف الخدمات</Action><Action href="/contact" outline>ناقش متطلباتك</Action></div>
             <div className="mt-9 flex items-center gap-4 border-t border-[#071d37]/15 pt-5 text-xs text-[#586371] md:mt-12"><span className="h-2 w-2 shrink-0 rotate-45 border border-[#8b6a38]" aria-hidden="true" />من تنسيق الأعمال، إلى وضوح التسليم.</div>
           </div>
@@ -56,8 +60,9 @@ export default function NetworkITPage() {
 
     <section className={`${styles.process} bg-[#efebe2] py-20 md:py-24`}><div className="container"><div className="mb-12 flex flex-col justify-between gap-5 md:mb-16 md:flex-row md:items-end" data-reveal><div><Label english="FROM PLAN TO HANDOVER">رحلة العمل</Label><h2 className="text-[30px] leading-[1.7] md:text-[40px]">من أول مخطط،<br />إلى آخر نقطة اتصال.</h2></div><p className="max-w-sm text-sm leading-[2.1] text-[#586371]">تسلسل واضح للأعمال، يربط التخطيط والتنفيذ والفحص بمتطلبات المشروع الفعلية.</p></div><ol className="grid grid-cols-1 gap-8 md:grid-cols-4 md:gap-6" data-reveal>{itWorkSteps.map(step => <li className="relative border-s border-[#b39a72] ps-7 md:border-s-0 md:border-t md:ps-0 md:pt-8" key={step.number}><span className="absolute -start-[4px] top-3 h-[7px] w-[7px] rotate-45 bg-[#8a6a38] md:start-0 md:-top-[4px]" aria-hidden="true" /><span lang="en" className="mb-3 block text-[30px] font-normal text-[#765a31]">{step.number}</span><h3 className="mb-3 text-xl">{step.title}</h3><p className="max-w-xs text-[13px] leading-[2.1] text-[#586371]">{step.text}</p></li>)}</ol></div></section>
 
-    <section className="py-20 md:py-28"><div className="container grid gap-8 md:grid-cols-[.75fr_1.25fr] md:gap-16 lg:gap-24"><div data-reveal><Label english="BEFORE WE BEGIN">أسئلة تساعدك على البداية</Label><h2 className="text-[30px] leading-[1.7] md:text-[38px]">صورة أوضح،<br />قبل اتخاذ الخطوة.</h2><p className="mt-6 max-w-xs text-sm leading-[2.1] text-[#586371]">تفاصيل صغيرة في البداية، تجعل تحديد نطاق المشروع أكثر وضوحًا.</p></div><div className="border-t border-[#071d37]/25" data-reveal>{itFAQs.map(faq => <details className={styles.faq} key={faq.question}><summary className="flex min-h-20 cursor-pointer items-center justify-between gap-6 py-5 text-[16px] leading-[1.9] md:text-lg"><h3 className="text-inherit">{faq.question}</h3><PlusIcon width={21} height={21} className="shrink-0 text-[#846333]" aria-hidden="true" /></summary><p className="max-w-[62ch] pb-7 pe-9 text-sm leading-[2.2] text-[#586371]">{faq.answer}</p></details>)}</div></div></section>
+    <section id="questions" aria-labelledby="questions-title" className="scroll-mt-28 py-20 md:py-28"><div className="container grid gap-8 md:grid-cols-[.75fr_1.25fr] md:gap-16 lg:gap-24"><div data-reveal><Label english="BEFORE WE BEGIN">أسئلة تساعدك على البداية</Label><h2 id="questions-title" className="text-[30px] leading-[1.7] md:text-[38px]">صورة أوضح،<br />قبل اتخاذ الخطوة.</h2><p className="mt-6 max-w-xs text-sm leading-[2.1] text-[#586371]">تفاصيل صغيرة في البداية، تجعل تحديد نطاق المشروع أكثر وضوحًا.</p></div><div className="border-t border-[#071d37]/25" data-reveal>{itFAQs.map(faq => <details id={`faq-${faq.id}`} className={styles.faq} key={faq.id} data-faq><summary className="flex min-h-20 cursor-pointer items-center justify-between gap-6 py-5 text-[16px] leading-[1.9] md:text-lg"><h3 className="text-inherit">{faq.question}</h3><PlusIcon width={21} height={21} className="shrink-0 text-[#846333]" aria-hidden="true" /></summary><p className="max-w-[62ch] pb-7 pe-9 text-sm leading-[2.2] text-[#586371]">{faq.answer}</p></details>)}</div></div></section>
 
     <section className="border-t border-[#071d37]/15 bg-[#e9ddc7]/40 py-16 md:py-20"><div className="container grid items-center gap-8 md:grid-cols-[1.2fr_1fr] md:gap-16"><div><Label english="LET’S DEFINE YOUR SCOPE">نبدأ بمتطلباتك</Label><h2 className="text-[29px] leading-[1.7] md:text-[38px]">لنتفق على شبكة،<br />تناسب مشروعك.</h2><p className="mt-5 max-w-lg text-sm leading-[2.1] text-[#586371]">شاركنا نوع المبنى والمخططات المتاحة والمرحلة الحالية. ومنها تبدأ مناقشة نطاق واضح للأعمال والتجهيزات المطلوبة.</p></div><div className="flex flex-col items-start gap-6"><Action href="/contact">لنتحدث عن مشروعك</Action><Link className="inline-flex min-h-11 items-center gap-4 text-xs text-[#586371]" href="/services/networks">تبحث عن شبكات المياه والبنية المدنية؟<ArrowTopLeftIcon width={17} height={17} aria-hidden="true" /></Link></div></div></section>
+    <RelatedPages path="/services/network-it" />
   </div>;
 }

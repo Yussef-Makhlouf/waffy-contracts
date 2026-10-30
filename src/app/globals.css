@@ -81,14 +81,19 @@ main:focus { outline: none; }
 .glass { color: var(--alwafi-ivory); background: #071d37e0; border: 1px solid #f7f5ef29; box-shadow: inset 0 1px 0 #ffffff1f, 0 30px 60px -30px #04101f99; }
 @supports (backdrop-filter: blur(18px)) { .glass { background: #071d3794; backdrop-filter: blur(18px) saturate(1.3); } }
 
-/* Emblem geometry. The roofline traces the tops of the eight wings of
-   alwafi-icon.svg; --peak is the height of its crown above the baseline. */
-.emblem-mask { clip-path: polygon(0 0, 100% 0, 100% 100%, 91.96% 100%, 91.96% calc(100% - var(--peak) * 0.281), 84.46% calc(100% - var(--peak) * 0.369), 83.66% calc(100% - var(--peak) * 0.369), 83.66% calc(100% - var(--peak) * 0.459), 82.86% calc(100% - var(--peak) * 0.459), 75.36% calc(100% - var(--peak) * 0.536), 74.91% calc(100% - var(--peak) * 0.536), 74.91% calc(100% - var(--peak) * 0.680), 74.46% calc(100% - var(--peak) * 0.680), 63.93% calc(100% - var(--peak) * 0.796), 63.39% calc(100% - var(--peak) * 0.796), 63.39% calc(100% - var(--peak) * 0.881), 62.86% calc(100% - var(--peak) * 0.881), 52.5% calc(100% - var(--peak)), 51.07% calc(100% - var(--peak)), 38.75% calc(100% - var(--peak) * 0.869), 38.13% calc(100% - var(--peak) * 0.869), 38.13% calc(100% - var(--peak) * 0.716), 37.5% calc(100% - var(--peak) * 0.716), 26.43% calc(100% - var(--peak) * 0.595), 25.71% calc(100% - var(--peak) * 0.595), 25.71% calc(100% - var(--peak) * 0.490), 25% calc(100% - var(--peak) * 0.490), 16.25% calc(100% - var(--peak) * 0.402), 15.54% calc(100% - var(--peak) * 0.399), 6.61% calc(100% - var(--peak) * 0.291), 6.61% 100%, 0 100%); }
-.emblem-rise { clip-path: polygon(0 var(--peak), 6.61% var(--peak), 6.61% calc(var(--peak) * 0.709), 15.54% calc(var(--peak) * 0.601), 16.25% calc(var(--peak) * 0.598), 25% calc(var(--peak) * 0.510), 25.71% calc(var(--peak) * 0.510), 25.71% calc(var(--peak) * 0.405), 26.43% calc(var(--peak) * 0.405), 37.5% calc(var(--peak) * 0.284), 38.13% calc(var(--peak) * 0.284), 38.13% calc(var(--peak) * 0.131), 38.75% calc(var(--peak) * 0.131), 51.07% 0, 52.5% 0, 62.86% calc(var(--peak) * 0.119), 63.39% calc(var(--peak) * 0.119), 63.39% calc(var(--peak) * 0.204), 63.93% calc(var(--peak) * 0.204), 74.46% calc(var(--peak) * 0.320), 74.91% calc(var(--peak) * 0.320), 74.91% calc(var(--peak) * 0.464), 75.36% calc(var(--peak) * 0.464), 82.86% calc(var(--peak) * 0.541), 83.66% calc(var(--peak) * 0.541), 83.66% calc(var(--peak) * 0.631), 84.46% calc(var(--peak) * 0.631), 91.96% calc(var(--peak) * 0.719), 91.96% var(--peak), 100% var(--peak), 100% 100%, 0 100%); }
+/* Emblem geometry. The horizon is the emblem's stepped crown, set twice: a
+   translucent echo behind, the solid ivory face in front, each edged in gold.
+   --peak is the height of the band it occupies. */
+.emblem-horizon { position: absolute; inset-inline: 0; height: var(--peak); color: var(--alwafi-gold); pointer-events: none; }
+.emblem-horizon svg { width: 100%; height: 100%; overflow: visible; }
+.emblem-horizon--below svg { filter: drop-shadow(0 -10px 24px #04101f59); }
+.emblem-horizon--above svg { filter: drop-shadow(0 10px 24px #04101f59); }
+.emblem-horizon-face { fill: var(--alwafi-ivory); }
+.emblem-horizon-echo { fill: var(--alwafi-ivory); fill-opacity: .14; }
+.emblem-horizon path[stroke] { stroke-width: 1.25; }
+.emblem-horizon-apex { position: absolute; left: 50%; width: 9px; height: 9px; translate: -50% -50%; rotate: 45deg; background: var(--alwafi-gold); box-shadow: 0 0 0 5px #d7b47533, 0 0 18px #d7b475aa; }
 /* The slope of the emblem's ascending wings, used to cut image tops. */
 .emblem-wing { clip-path: polygon(0 7%, 100% 0, 100% 100%, 0 100%); }
-.emblem-roofline { position: absolute; inset-inline: 0; width: 100%; height: var(--peak); color: var(--alwafi-gold); pointer-events: none; }
-.emblem-roofline path { stroke-width: 1.25; }
 .curtain { position: absolute; inset: 0; z-index: 1; background: var(--alwafi-ivory); transform: scaleY(0); transform-origin: top; pointer-events: none; }
 .curtain--navy { background: var(--alwafi-navy); }
 
@@ -116,7 +121,7 @@ main:focus { outline: none; }
 .hero-media { position: absolute; inset: 0; z-index: -2; background: var(--alwafi-navy); overflow: hidden; }
 .hero-image { object-fit: cover; object-position: 50% 30%; }
 .hero-shade { position: absolute; inset: 0; background: linear-gradient(180deg, #071d37b3 0%, #071d3714 24%, #071d3740 44%, #071d37eb 70%, #071d37 100%); }
-.hero-roofline { bottom: 0; z-index: -1; }
+.hero-horizon { bottom: -1px; z-index: -1; }
 .hero-stage { position: relative; min-height: max(680px, 100svh); display: flex; flex-direction: column; justify-content: flex-end; padding-block: 120px calc(var(--peak) + 36px); }
 .hero-copy h1 { font-size: clamp(40px, 11.4vw, 54px); line-height: 1.35; margin-block: 18px 16px; }
 .hero-copy h1 > span { color: var(--alwafi-gold); }
@@ -254,7 +259,7 @@ main:focus { outline: none; }
 .closing-media { position: absolute; inset: 0; z-index: -2; background: var(--alwafi-navy); }
 .closing-media img { object-fit: cover; object-position: 78% center; }
 .closing-shade { position: absolute; inset: 0; background: linear-gradient(180deg, #071d37c7 0%, #071d378c 45%, #071d37f0 100%); }
-.closing-roofline { top: 0; z-index: -1; }
+.closing-horizon { top: -1px; z-index: -1; }
 .closing-layout { display: grid; gap: 40px; padding-block: calc(var(--peak) + 64px) 64px; }
 .closing h2 { font-size: clamp(44px, 12vw, 104px); line-height: 1.3; }
 .closing h2 span { color: var(--alwafi-gold); }

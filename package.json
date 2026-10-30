@@ -12,7 +12,9 @@
     "test": "node --test tests/*.test.mjs",
     "test:browser": "playwright test",
     "assets:prepare": "node scripts/prepare-assets.mjs",
-    "assets:prepare:network-it": "node scripts/prepare-network-it-assets.mjs"
+    "assets:prepare:network-it": "node scripts/prepare-network-it-assets.mjs",
+    "assets:prepare:search": "node scripts/prepare-search-assets.mjs",
+    "seo:check": "node scripts/check-search-config.mjs"
   },
   "dependencies": {
     "@gsap/react": "^2.1.2",
@@ -27,6 +29,7 @@
     "@axe-core/playwright": "^4.14.0",
     "@fontsource/ibm-plex-sans": "^5.3.0",
     "@fontsource/ibm-plex-sans-arabic": "^5.3.0",
+    "@next/env": "16.4.3",
     "@playwright/test": "^1.64.1",
     "@tailwindcss/postcss": "^4.3.3",
     "@types/node": "^26.6.6",

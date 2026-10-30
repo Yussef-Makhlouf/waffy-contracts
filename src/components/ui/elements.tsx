@@ -23,11 +23,25 @@ export function Eyebrow({ children, english, light = false }: { children: React.
 export function SectionHeading({ eyebrow, english, title, children, light = false }: { eyebrow: string; english: string; title: React.ReactNode; children?: React.ReactNode; light?: boolean }) {
   return <div className={`section-heading ${light ? "section-heading--light" : ""}`}><Eyebrow english={english} light={light}>{eyebrow}</Eyebrow><h2>{title}</h2>{children && <p>{children}</p>}</div>;
 }
-// The stepped crown of the eight emblem wings (alwafi-icon.svg, crown at y=28),
-// stretched across a band whose height is the CSS --peak used by .emblem-mask.
-const rooflinePath = "M0 388H37V275L87 233H89V232H91L140 198H144V157H148L210 110H213.5V51H217L286 0H294L352 46H355V79H358L417 124H419.5V180H422L464 210H468.5V245H473L515 279V388H560";
-export function EmblemRoofline({ className = "" }: { className?: string }) {
-  return <svg className={`emblem-roofline ${className}`} viewBox="0 0 560 388" preserveAspectRatio="none" fill="none" aria-hidden="true"><path d={rooflinePath} pathLength={1} stroke="currentColor" vectorEffect="non-scaling-stroke" data-draw /></svg>;
+// The emblem's stepped crown, simplified to its wings: [x, rise] as fractions of
+// a band whose height is the CSS --peak. Each wing climbs, then steps up.
+const crown: [number, number][] = [[0, .14], [.1, .28], [.1, .4], [.2, .54], [.2, .66], [.31, .8], [.31, .9], [.47, 1], [.53, 1], [.69, .9], [.69, .8], [.8, .66], [.8, .54], [.9, .4], [.9, .28], [1, .14]];
+const W = 1440, H = 120;
+const profile = (base: number, shift = 0) => crown.map(([x, rise], i) => `${i ? "L" : "M"}${(Math.min(1, Math.max(0, x + shift)) * W).toFixed(1)} ${((1 - base - rise * .8) * H).toFixed(1)}`).join("");
+// The ivory of the page meets the photograph along the crown. "below": the
+// page rises into the image (hero). "above": the image rises into the page.
+export function EmblemHorizon({ side, className = "" }: { side: "below" | "above"; className?: string }) {
+  const [face, echo] = side === "below" ? [0, .2] : [.12, 0];
+  const close = side === "below" ? `V${H}H0Z` : "V0H0Z";
+  return <div className={`emblem-horizon emblem-horizon--${side} ${className}`} aria-hidden="true">
+    <svg viewBox={`0 0 ${W} ${H}`} preserveAspectRatio="none" fill="none">
+      <path d={profile(echo, .03) + close} className="emblem-horizon-echo" />
+      <path d={profile(echo, .03)} stroke="currentColor" strokeOpacity=".35" vectorEffect="non-scaling-stroke" pathLength={1} data-draw />
+      <path d={profile(face) + close} className="emblem-horizon-face" />
+      <path d={profile(face)} stroke="currentColor" vectorEffect="non-scaling-stroke" pathLength={1} data-draw />
+    </svg>
+    <span className="emblem-horizon-apex" style={{ top: `${(1 - face - .8) * 100}%` }} />
+  </div>;
 }
 // The emblem's gold diagonal beam and the wing seams around it, as a drafting overlay.
 export function EmblemBeam({ className = "" }: { className?: string }) {

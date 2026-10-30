@@ -1,23 +1,31 @@
 import type { Metadata } from "next";
 import { brand } from "@/config/brand";
+import { searchPages, type SearchPath } from "@/content/search";
+import { publicUrl, searchConfiguration } from "./search-utils";
 
-function configuredOrigin() {
-  const value = process.env.NEXT_PUBLIC_SITE_URL;
-  if (!value) return null;
-  try {
-    const url = new URL(value);
-    return /^https?:$/.test(url.protocol) ? url.origin : null;
-  } catch { return null; }
-}
+export const { origin: siteOrigin, indexable: siteIndexable } = searchConfiguration(process.env);
 
-export const siteOrigin = configuredOrigin();
-export function pageMetadata(title: string, description: string, path: string): Metadata {
+export const searchRobots: Metadata["robots"] = {
+  index: siteIndexable, follow: true,
+  googleBot: { index: siteIndexable, follow: true, "max-snippet": -1, "max-image-preview": "large", "max-video-preview": -1 },
+};
+
+export function pageMetadata(path: SearchPath): Metadata {
+  const page = searchPages[path];
+  const url = publicUrl(siteOrigin, path);
+  const image = publicUrl(siteOrigin, page.image);
   return {
-    title: { absolute: `${title} | ${brand.name}` }, description,
-    ...(siteOrigin ? { alternates: { canonical: `${siteOrigin}${path}` } } : {}),
+    title: { absolute: page.title }, description: page.description,
+    ...(url ? { alternates: { canonical: url } } : {}),
+    robots: searchRobots,
     openGraph: {
-      title: `${title} | ${brand.name}`, description, locale: "ar_SA", type: "website", siteName: brand.name,
-      ...(siteOrigin ? { url: `${siteOrigin}${path}`, images: [{ url: `${siteOrigin}${brand.images.hero}`, width: 1672, height: 941, alt: "تصور معماري تعبيري للوافي" }] } : {}),
+      title: page.title, description: page.description, locale: "ar_SA", type: "website", siteName: brand.name,
+      ...(url ? { url } : {}),
+      ...(image ? { images: [{ url: image, width: 1200, height: 630, type: "image/jpeg", alt: page.imageAlt }] } : {}),
+    },
+    twitter: {
+      card: "summary_large_image", title: page.title, description: page.description,
+      ...(image ? { images: [{ url: image, alt: page.imageAlt }] } : {}),
     },
   };
 }
