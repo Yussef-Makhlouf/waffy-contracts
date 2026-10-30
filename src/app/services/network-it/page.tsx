@@ -1,0 +1,63 @@
+import Image from "next/image";
+import Link from "next/link";
+import { ArrowLeftIcon, ArrowTopLeftIcon, CheckIcon, ChevronLeftIcon, Component1Icon, DesktopIcon, LockClosedIcon, PlusIcon, Share2Icon } from "@radix-ui/react-icons";
+import { networkIT, itServiceGroups, itDeliverables, itBuildingTypes, itWorkSteps, itFAQs } from "@/content/network-it";
+import { pageMetadata } from "@/lib/seo";
+import styles from "./network-it.module.css";
+
+export const metadata = pageMetadata(networkIT.title, networkIT.description, networkIT.route);
+
+const serviceIcons = { cabling: Share2Icon, connectivity: Component1Icon, rooms: DesktopIcon, systems: LockClosedIcon };
+
+function Label({ children, english, dark = false }: { children: React.ReactNode; english: string; dark?: boolean }) {
+  return <div className={`mb-5 flex flex-wrap items-center gap-x-3 gap-y-2 text-xs ${dark ? "text-[#e9ddc7]" : "text-[#765a31]"}`}><span className="h-px w-7 bg-current" aria-hidden="true" /><span>{children}</span><span lang="en" dir="ltr" className={`w-full text-[9px] tracking-[.18em] md:ms-2 md:w-auto md:border-s md:ps-4 ${dark ? "border-white/25 text-[#c7d2dc]" : "border-[#071d37]/20 text-[#586371]"}`}>{english}</span></div>;
+}
+
+function Action({ href, children, outline = false }: { href: string; children: React.ReactNode; outline?: boolean }) {
+  return <Link href={href} data-tone={outline ? "outline" : "navy"} className={`${styles.action} inline-flex min-h-14 w-full items-center justify-between gap-7 border px-6 py-3 text-sm min-[480px]:w-auto ${outline ? "border-[#071d37]/25 bg-transparent hover:border-[#977442]" : "border-navy bg-navy hover:bg-[#12365a]"}`}><span>{children}</span><ArrowLeftIcon width={20} height={20} aria-hidden="true" /></Link>;
+}
+
+export default function NetworkITPage() {
+  return <div className={styles.page}>
+    <section className="relative overflow-clip bg-ivory pt-28 md:pt-36" aria-labelledby="it-page-title">
+      <div className="container">
+        <nav className="mb-7 flex flex-wrap items-center gap-2 text-[11px] text-[#586371] md:mb-10" aria-label="مسار الصفحة"><Link className="inline-flex min-h-11 min-w-11 items-center" href="/">الرئيسية</Link><ChevronLeftIcon aria-hidden="true" /><Link className="inline-flex min-h-11 min-w-11 items-center" href="/services">خدماتنا</Link><ChevronLeftIcon aria-hidden="true" /><span aria-current="page">الشبكات وتقنية المعلومات</span></nav>
+        <div className="grid items-center gap-12 pb-12 md:grid-cols-[1fr_1fr] md:gap-10 md:pb-20 lg:grid-cols-[1fr_1.05fr] lg:gap-20">
+          <div className="max-w-xl" data-hero-reveal>
+            <Label english="NETWORK & IT CONTRACTING">حلول تقنية تبدأ من المخطط</Label>
+            <h1 id="it-page-title" className="text-[35px] font-medium leading-[1.65] text-navy min-[390px]:text-[39px] md:text-[44px] lg:text-[56px]">البنية التي تصل<br /><span className="text-[#846333]">كل تفاصيل مشروعك.</span></h1>
+            <p className="mt-6 max-w-[32rem] text-[15px] leading-[2.15] text-[#586371] md:mt-7 md:text-base">شبكات وتقنية معلومات تُخطَّط مع المبنى؛ من مسارات الكابلات ونقاط البيانات، إلى غرف الاتصالات والأنظمة التي يحتاجها المكان ليعمل.</p>
+            <div className="mt-8 flex flex-wrap gap-3 md:mt-10"><Action href="#it-services">استكشف الخدمات</Action><Action href="/contact" outline>ناقش متطلباتك</Action></div>
+            <div className="mt-9 flex items-center gap-4 border-t border-[#071d37]/15 pt-5 text-xs text-[#586371] md:mt-12"><span className="h-2 w-2 shrink-0 rotate-45 border border-[#8b6a38]" aria-hidden="true" />من تنسيق الأعمال، إلى وضوح التسليم.</div>
+          </div>
+          <figure className={`${styles.heroVisual} relative mb-8 ms-0 md:mb-5 md:ms-5`}>
+            <div className="relative aspect-[5/5.4] overflow-hidden bg-[#dcd8cf] md:aspect-[5/5.6]"><Image src={networkIT.images.hero.src} alt={networkIT.images.hero.alt} fill sizes="(min-width: 1280px) 600px, (min-width: 768px) 47vw, 100vw" preload quality={85} className="object-cover" /></div>
+            <figcaption className="absolute -bottom-7 start-5 end-5 flex items-center justify-between gap-4 border border-white/20 bg-[#071d37]/95 px-5 py-5 text-ivory shadow-[inset_0_1px_0_#ffffff20] backdrop-blur-xl md:-start-5 md:end-8 md:px-7"><span className="text-sm md:text-base">تفاصيل منظّمة.<br /><span className="text-[#d7b475]">لشبكة يمكن البناء عليها.</span></span><span lang="en" dir="ltr" className="text-[9px] leading-6 tracking-[.16em] text-[#c9d2db]">PLANNED.<br />CONNECTED.</span></figcaption>
+          </figure>
+        </div>
+      </div>
+      <div className="border-y border-[#071d37]/15 bg-[#efebe2]/65"><nav className="container grid grid-cols-1 gap-x-5 md:grid-cols-4" aria-label="تخصصات الشبكات وتقنية المعلومات">{itServiceGroups.map(service => <Link key={service.id} href={`#${service.id}`} className="group flex min-h-16 items-center justify-between gap-3 border-b border-[#071d37]/10 py-3 text-xs transition-colors last:border-b-0 hover:text-[#765a31] md:min-h-20 md:border-b-0"><span className="flex items-center gap-3"><span lang="en" className="text-[10px] text-[#765a31]">{service.number}</span>{service.title}</span><ArrowTopLeftIcon width={18} height={18} className="shrink-0 transition-transform group-hover:-translate-x-1 group-hover:-translate-y-1" aria-hidden="true" /></Link>)}</nav></div>
+    </section>
+
+    <section id="it-services" className="scroll-mt-28 py-20 md:py-28">
+      <div className="container">
+        <div className="mb-12 grid gap-6 md:mb-16 md:grid-cols-[1.2fr_1fr] md:items-end md:gap-16" data-reveal><div><Label english="THE SCOPE, CLEARLY DEFINED">خدمات الشبكات وتقنية المعلومات</Label><h2 className="text-[30px] leading-[1.65] md:text-[40px]">اتصال جيد،<br />يبدأ بتنفيذ صحيح.</h2></div><p className="max-w-lg text-sm leading-[2.15] text-[#586371] md:text-[15px]">أربعة مجالات تتكامل مع أعمال المقاولات. نبدأ بفهم احتياج المبنى، ثم تحديد نقاط الربط والمسارات والتجهيزات التي تناسب استخدامه.</p></div>
+        <div className="grid gap-x-16 md:grid-cols-2 lg:gap-x-24">{itServiceGroups.map(service => {
+          const Icon = serviceIcons[service.icon];
+          return <article key={service.id} id={service.id} className="scroll-mt-28 border-t border-[#071d37]/25 pb-12 pt-7 md:pb-16 md:pt-9" data-reveal><div className="mb-6 flex items-center justify-between"><Icon width={29} height={29} className="text-[#846333]" aria-hidden="true" /><span lang="en" dir="ltr" className="text-[10px] tracking-[.14em] text-[#586371]">{service.number} / {service.english}</span></div><h3 className="mb-4 text-[23px] leading-[1.7] md:text-[27px]">{service.title}</h3><p className="text-sm leading-[2.15] text-[#586371]">{service.description}</p><ul className="mt-5 space-y-3">{service.items.map(item => <li key={item} className="flex items-start gap-3 text-[13px] leading-[2]"><CheckIcon width={17} height={17} className="mt-1 shrink-0 text-[#846333]" aria-hidden="true" /><span>{item}</span></li>)}</ul><p className="mt-6 border-s border-[#b39a72] ps-4 text-xs leading-7 text-[#765a31]">{service.result}</p></article>;
+        })}</div>
+        <p className="border-t border-[#071d37]/15 pt-5 text-xs leading-[2] text-[#586371]">{networkIT.scopeNote}</p>
+      </div>
+    </section>
+
+    <section className="overflow-clip bg-navy py-16 text-ivory md:py-24" aria-labelledby="it-handover-title"><div className="container grid items-center gap-12 md:grid-cols-[1fr_1.08fr] lg:gap-20"><div data-reveal><Label english="ORDER IN EVERY CONNECTION" dark>العناية بما وراء الواجهة</Label><h2 id="it-handover-title" className="text-[31px] leading-[1.7] md:text-[40px]">تفاصيل مرتّبة.<br /><span className="text-gold">وتسليم مفهوم.</span></h2><p className="mt-5 max-w-lg text-sm leading-[2.15] text-[#c7d2dc]">قيمة الشبكة لا تتوقف عند تركيب الأجهزة. وضوح المسارات والتوثيق يساعد الجهة المشغّلة على فهم ما تم تنفيذه. نتفق على مخرجات التسليم من البداية، وقد تشمل:</p><div className="mt-8 grid gap-5">{itDeliverables.map(item => <div key={item.title} className="border-t border-white/20 pt-4"><h3 className="mb-1 text-base text-[#e9ddc7]">{item.title}</h3><p className="text-xs leading-[2] text-[#c7d2dc]">{item.text}</p></div>)}</div></div><figure className="relative" data-reveal><div className="relative aspect-[4/4.7] overflow-hidden bg-[#12365a]"><Image src={networkIT.images.cabling.src} alt={networkIT.images.cabling.alt} fill sizes="(min-width: 1280px) 600px, (min-width: 768px) 48vw, 100vw" className="object-cover" /></div><figcaption className="mt-5 flex justify-between gap-4 border-t border-[#d7b475]/35 pt-4 text-xs text-[#c7d2dc]"><span>كل نقطة لها موقع.<br />وكل مسار له توثيق.</span><span lang="en" dir="ltr" className="text-[9px] tracking-[.15em] text-gold">DETAIL / 01</span></figcaption></figure></div></section>
+
+    <section className="py-20 md:py-28"><div className="container grid items-start gap-12 md:grid-cols-[1.05fr_1fr] lg:gap-24"><figure data-reveal><div className="relative aspect-[5/4.5] overflow-hidden bg-[#e9ddc7]"><Image src={networkIT.images.installation.src} alt={networkIT.images.installation.alt} fill sizes="(min-width: 1280px) 600px, (min-width: 768px) 48vw, 100vw" className="object-cover" /></div><figcaption className="mt-4 text-[11px] leading-[1.9] text-[#586371]">{networkIT.imageNote}</figcaption></figure><div className="md:pt-8" data-reveal><Label english="BUILT AROUND THE BUILDING">لكل مبنى احتياجه</Label><h2 className="mb-7 text-[30px] leading-[1.7] md:text-[38px]">التقنية المناسبة،<br />للمكان الذي تبنيه.</h2><div>{itBuildingTypes.map(type => <div className="border-t border-[#071d37]/20 py-5" key={type.title}><h3 className="mb-1 text-[18px]">{type.title}</h3><p className="text-[13px] leading-[2] text-[#586371]">{type.text}</p></div>)}</div></div></div></section>
+
+    <section className={`${styles.process} bg-[#efebe2] py-20 md:py-24`}><div className="container"><div className="mb-12 flex flex-col justify-between gap-5 md:mb-16 md:flex-row md:items-end" data-reveal><div><Label english="FROM PLAN TO HANDOVER">رحلة العمل</Label><h2 className="text-[30px] leading-[1.7] md:text-[40px]">من أول مخطط،<br />إلى آخر نقطة اتصال.</h2></div><p className="max-w-sm text-sm leading-[2.1] text-[#586371]">تسلسل واضح للأعمال، يربط التخطيط والتنفيذ والفحص بمتطلبات المشروع الفعلية.</p></div><ol className="grid grid-cols-1 gap-8 md:grid-cols-4 md:gap-6" data-reveal>{itWorkSteps.map(step => <li className="relative border-s border-[#b39a72] ps-7 md:border-s-0 md:border-t md:ps-0 md:pt-8" key={step.number}><span className="absolute -start-[4px] top-3 h-[7px] w-[7px] rotate-45 bg-[#8a6a38] md:start-0 md:-top-[4px]" aria-hidden="true" /><span lang="en" className="mb-3 block text-[30px] font-normal text-[#765a31]">{step.number}</span><h3 className="mb-3 text-xl">{step.title}</h3><p className="max-w-xs text-[13px] leading-[2.1] text-[#586371]">{step.text}</p></li>)}</ol></div></section>
+
+    <section className="py-20 md:py-28"><div className="container grid gap-8 md:grid-cols-[.75fr_1.25fr] md:gap-16 lg:gap-24"><div data-reveal><Label english="BEFORE WE BEGIN">أسئلة تساعدك على البداية</Label><h2 className="text-[30px] leading-[1.7] md:text-[38px]">صورة أوضح،<br />قبل اتخاذ الخطوة.</h2><p className="mt-6 max-w-xs text-sm leading-[2.1] text-[#586371]">تفاصيل صغيرة في البداية، تجعل تحديد نطاق المشروع أكثر وضوحًا.</p></div><div className="border-t border-[#071d37]/25" data-reveal>{itFAQs.map(faq => <details className={styles.faq} key={faq.question}><summary className="flex min-h-20 cursor-pointer items-center justify-between gap-6 py-5 text-[16px] leading-[1.9] md:text-lg"><h3 className="text-inherit">{faq.question}</h3><PlusIcon width={21} height={21} className="shrink-0 text-[#846333]" aria-hidden="true" /></summary><p className="max-w-[62ch] pb-7 pe-9 text-sm leading-[2.2] text-[#586371]">{faq.answer}</p></details>)}</div></div></section>
+
+    <section className="border-t border-[#071d37]/15 bg-[#e9ddc7]/40 py-16 md:py-20"><div className="container grid items-center gap-8 md:grid-cols-[1.2fr_1fr] md:gap-16"><div><Label english="LET’S DEFINE YOUR SCOPE">نبدأ بمتطلباتك</Label><h2 className="text-[29px] leading-[1.7] md:text-[38px]">لنتفق على شبكة،<br />تناسب مشروعك.</h2><p className="mt-5 max-w-lg text-sm leading-[2.1] text-[#586371]">شاركنا نوع المبنى والمخططات المتاحة والمرحلة الحالية. ومنها تبدأ مناقشة نطاق واضح للأعمال والتجهيزات المطلوبة.</p></div><div className="flex flex-col items-start gap-6"><Action href="/contact">لنتحدث عن مشروعك</Action><Link className="inline-flex min-h-11 items-center gap-4 text-xs text-[#586371]" href="/services/networks">تبحث عن شبكات المياه والبنية المدنية؟<ArrowTopLeftIcon width={17} height={17} aria-hidden="true" /></Link></div></div></section>
+  </div>;
+}

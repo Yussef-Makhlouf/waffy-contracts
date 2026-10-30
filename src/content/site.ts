@@ -2,6 +2,7 @@ export const navigation = [
   { href: "/", label: "الرئيسية" },
   { href: "/services", label: "خدماتنا" },
   { href: "/services/networks", label: "الشبكات" },
+  { href: "/services/network-it", label: "تقنية المعلومات" },
   { href: "/contact", label: "تواصل معنا" },
 ] as const;
 

@@ -1,0 +1,16 @@
+.page { background: var(--alwafi-ivory); color: var(--alwafi-navy); }
+.page h1, .page h2, .page h3 { letter-spacing: 0; }
+.page [id] { scroll-margin-top: 120px; }
+.heroVisual::before { content: ""; position: absolute; inset: -12px 14px 20px -12px; border: 1px solid #ac8c575c; pointer-events: none; }
+.action { color: var(--alwafi-ivory); transition: background .25s cubic-bezier(.16,1,.3,1), border-color .25s, transform .25s; }
+.action[data-tone="outline"] { color: var(--alwafi-navy); }
+.action svg { transition: transform .25s cubic-bezier(.16,1,.3,1); }
+.action:hover svg { transform: translateX(-4px); }
+.action:active { transform: translateY(1px) scale(.99); }
+.faq { border-bottom: 1px solid #071d3733; }
+.faq summary { list-style: none; }
+.faq summary::-webkit-details-marker { display: none; }
+.faq summary svg { transition: transform .25s cubic-bezier(.16,1,.3,1); }
+.faq[open] summary svg { transform: rotate(45deg); }
+.process { background-image: linear-gradient(90deg, #071d3704 1px, transparent 1px); background-size: 100px 100%; }
+@media (prefers-reduced-motion: reduce) { .action, .action svg, .faq summary svg { transition: none; } }

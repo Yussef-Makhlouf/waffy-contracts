@@ -1,10 +1,57 @@
-import { Phone } from "lucide-react";
-import { contactLinks } from "@/config/contact";
+"use client";
 
-export function WhatsAppIcon({ size = 24 }: { size?: number }) {
-  return <svg width={size} height={size} viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M20.5 3.5A11.9 11.9 0 0 0 1.7 17.8L0 24l6.4-1.7A11.9 11.9 0 0 0 24 11.8c0-3.1-1.2-6.1-3.5-8.3ZM12 21.8a9.8 9.8 0 0 1-5-1.4l-.4-.2-3.8 1 1-3.7-.2-.4A9.9 9.9 0 1 1 12 21.8Zm5.4-7.4c-.3-.2-1.8-.9-2.1-1-.3-.1-.5-.2-.7.2l-.9 1c-.2.2-.4.2-.7.1a8.1 8.1 0 0 1-4-3.5c-.2-.3 0-.5.1-.6l.5-.6.3-.5c.1-.2 0-.4 0-.6L9 6.8c-.2-.6-.5-.5-.7-.5h-.6c-.2 0-.5 0-.8.4-.2.3-1 1-1 2.4s1 2.8 1.2 3c.1.2 2.1 3.3 5.2 4.6 1.9.8 2.7.9 3.7.7.6-.1 1.8-.7 2-1.4.3-.7.3-1.3.2-1.4-.1-.2-.3-.2-.6-.4Z" /></svg>;
-}
+import { useEffect, useId, useRef, useState, type MouseEvent } from "react";
+import { Cross2Icon } from "@radix-ui/react-icons";
+import { contactLinks } from "@/config/contact";
+import { CallIcon, WhatsAppIcon } from "@/components/ui/BrandIcons";
+import styles from "./FloatingContactActions.module.css";
+
+type Channel = "phone" | "whatsapp";
+const channels = [
+  { id: "whatsapp" as const, label: "التواصل عبر واتساب", title: "واتساب", message: "سيُضاف رقم واتساب الرسمي عند توفره." },
+  { id: "phone" as const, label: "اتصال مباشر بالوافي", title: "الاتصال المباشر", message: "سيُضاف رقم الاتصال الرسمي عند توفره." },
+];
+
 export function FloatingContactActions() {
-  if (!contactLinks.phone && !contactLinks.whatsapp) return null;
-  return <aside className="floating-actions" aria-label="تواصل مباشر">{contactLinks.whatsapp && <a className="floating-action whatsapp" href={contactLinks.whatsapp} target="_blank" rel="noopener noreferrer" aria-label="التواصل عبر واتساب"><WhatsAppIcon /></a>}{contactLinks.phone && <a className="floating-action" href={contactLinks.phone} aria-label="اتصال مباشر بالوافي"><Phone size={22} /></a>}</aside>;
+  const root = useRef<HTMLElement>(null);
+  const controls = useRef<Map<Channel, HTMLElement>>(new Map());
+  const noticeId = useId();
+  const [active, setActive] = useState<Channel | null>(null);
+  const selected = channels.find(channel => channel.id === active);
+
+  function togglePending(event: MouseEvent<HTMLButtonElement>) {
+    const id = event.currentTarget.dataset.channel as Channel;
+    setActive(previous => previous === id ? null : id);
+  }
+  function closeNotice() {
+    if (active) controls.current.get(active)?.focus();
+    setActive(null);
+  }
+  useEffect(() => {
+    if (!active) return;
+    function onOutside(event: PointerEvent) {
+      if (event.target instanceof Node && !root.current?.contains(event.target)) setActive(null);
+    }
+    function onEscape(event: KeyboardEvent) {
+      if (event.key !== "Escape") return;
+      if (active) controls.current.get(active)?.focus();
+      setActive(null);
+    }
+    document.addEventListener("pointerdown", onOutside);
+    document.addEventListener("keydown", onEscape);
+    return () => {
+      document.removeEventListener("pointerdown", onOutside);
+      document.removeEventListener("keydown", onEscape);
+    };
+  }, [active]);
+
+  return <aside ref={root} className={`floating-actions ${styles.root}`} aria-label="تواصل مباشر">
+    {selected && <div className={styles.notice} id={noticeId}><div className={styles.noticeTop}><strong>{selected.title}</strong><button className={styles.close} onClick={closeNotice} aria-label="إغلاق تنبيه التواصل"><Cross2Icon width={16} height={16} /></button></div><p role="status">{selected.message}</p></div>}
+    {channels.map(channel => {
+      const href = contactLinks[channel.id];
+      const className = `floating-action ${styles.action} ${channel.id === "whatsapp" ? `whatsapp ${styles.whatsapp}` : ""}`;
+      const icon = channel.id === "whatsapp" ? <WhatsAppIcon size={25} /> : <CallIcon size={23} />;
+      return href ? <a key={channel.id} data-contact-action={channel.id} className={className} href={href} target={channel.id === "whatsapp" ? "_blank" : undefined} rel={channel.id === "whatsapp" ? "noopener noreferrer" : undefined} aria-label={channel.label} title={channel.label}>{icon}</a> : <button key={channel.id} ref={element => { if (element) controls.current.set(channel.id, element); else controls.current.delete(channel.id); }} type="button" data-contact-action={channel.id} data-channel={channel.id} onClick={togglePending} className={className} aria-label={`${channel.label} — الرقم سيُضاف لاحقًا`} aria-expanded={active === channel.id} aria-controls={active === channel.id ? noticeId : undefined} title={`${channel.title} — الرقم سيُضاف لاحقًا`}>{icon}</button>;
+    })}
+  </aside>;
 }

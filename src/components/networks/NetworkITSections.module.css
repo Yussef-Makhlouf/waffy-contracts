@@ -1,0 +1,46 @@
+.home { position: relative; background: #f7f5ef; color: #071d37; }
+.home h2, .services h2, .services h3 { letter-spacing: 0; }
+.homeVisual { padding-inline-start: 22px; margin-block-end: 56px; }
+.homeIntro { margin-block-start: 24px; }
+.footnote { margin-block-start: 20px; }
+.detailDescription { margin-block-end: 20px; }
+.homeVisual::before { content: ""; position: absolute; inset: -12px 0 32px -12px; border: 1px solid #b59c704d; pointer-events: none; }
+.homePhoto img { object-position: 58% center; transition: transform .8s cubic-bezier(.16,1,.3,1); }
+.homePhoto:hover img { transform: scale(1.025); }
+.photoShade { position: absolute; inset: 0; background: linear-gradient(180deg,#071d37b8 0%,transparent 30%,transparent 70%,#071d3766 100%); }
+.homePaths { position: absolute; width: calc(100% + 32px); height: calc(100% + 24px); inset-block-start: -12px; inset-inline-start: -12px; color: #a1814a; pointer-events: none; }
+.homeInset { position: absolute; width: 132px; inset-inline-end: -2px; inset-block-end: -38px; padding: 5px; color: #f7f5ef; background: #071d37; border: 1px solid #d7b4755e; box-shadow: 0 14px 35px -20px #071d37a8; }
+.homeCaption { position: absolute; inset-inline-start: 5px; inset-block-end: 16px; padding: 16px; display: flex; gap: 13px; align-items: center; color: #f7f5ef; background: #071d37ed; border: 1px solid #ffffff33; box-shadow: inset 0 1px 0 #ffffff1f; }
+.homeCaption > svg { color: #d7b475; flex-shrink: 0; }
+.capabilityLink { color: #071d37; transition: color .25s; }
+.capabilityLink:hover { color: #765a31; }
+.capabilityLink:active { transform: translateY(1px); }
+.cta { min-height: 56px; display: inline-flex; width: 100%; justify-content: space-between; align-items: center; gap: 28px; padding: 13px 22px; border: 1px solid #071d37; background: #071d37; color: #f7f5ef; border-radius: 2px; font-size: 13px; line-height: 1.9; transition: background .25s, transform .25s; }
+.cta > svg { flex-shrink: 0; transition: transform .25s; }
+.cta:hover { background: #12365a; }
+.cta:hover > svg { transform: translateX(-4px); }
+.cta:active { transform: translateY(1px) scale(.99); }
+.services { position: relative; color: #071d37; background: #f4f1e9; border-block-start: 1px solid #071d3714; }
+.systemsBoard { overflow: hidden; background: #071d37; border: 1px solid #d7b47540; box-shadow: inset 0 1px 0 #ffffff1f; }
+.diagram { padding: 24px 20px 22px; background-image: radial-gradient(ellipse at 20% 80%, #12365a80, transparent 65%); }
+.serviceDetails { border-bottom: 1px solid #071d3726; }
+.serviceDetails summary { list-style: none; }
+.serviceDetails summary::-webkit-details-marker { display: none; }
+.expandIcon { flex-shrink: 0; color: #846333; transition: transform .25s; }
+.serviceDetails[open] .expandIcon { transform: rotate(45deg); }
+.detailLink { color: #765a31; width: fit-content; min-height: 44px; display: inline-flex; align-items: center; gap: 16px; padding-block: 7px; margin-block-start: 16px; border-block-end: 1px solid #ac9165; font-size: 12px; }
+.detailLink:hover { color: #071d37; }
+@supports (backdrop-filter: blur(18px)) { .homeCaption { background: #071d37cc; backdrop-filter: blur(18px); } }
+@media (min-width: 600px) { .homeInset { width: 180px; inset-inline-end: -10px; } .homeCaption { padding: 22px; gap: 20px; } }
+@media (min-width: 768px) {
+  .homeVisual { padding-inline-start: 24px; margin-block-end: 40px; }
+  .homeInset { width: 160px; inset-inline-end: -10px; inset-block-end: -34px; }
+  .homeCaption { inset-inline-start: 0; inset-block-end: 20px; padding: 18px; }
+  .homeCaption > svg { display: none; }
+  .cta { width: fit-content; min-width: 245px; }
+  .capabilityLink + .capabilityLink { padding-inline-start: 20px; border-inline-start: 1px solid #071d371f; }
+  .capabilityLink:nth-child(2n+1) { padding-inline-start: 0; border-inline-start: 0; }
+  .diagram { padding: 28px 28px 22px; }
+}
+@media (min-width: 1024px) { .homeInset { width: 200px; inset-inline-end: -12px; inset-block-end: -30px; } .homeCaption { padding: 23px; inset-inline-start: 0; inset-block-end: 24px; } .homeCaption > svg { display: block; } .capabilityLink + .capabilityLink { padding-inline-start: 20px; border-inline-start: 1px solid #071d371f; } }
+@media (prefers-reduced-motion: reduce) { .homePhoto img, .capabilityLink, .cta, .cta > svg, .expandIcon { transition: none; } }

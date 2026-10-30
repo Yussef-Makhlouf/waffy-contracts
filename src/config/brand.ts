@@ -9,4 +9,14 @@ export const brand = {
     architecture: "/images/riyadh-panorama.webp",
     engineering: "/images/site-engineer.webp",
   },
+  // Art-directed framings of the same four renders; see scripts/prepare-assets.mjs.
+  crops: {
+    heroPortrait: "/images/crop-hero-portrait.webp",
+    skylineDusk: "/images/crop-skyline-dusk.webp",
+    engineerView: "/images/crop-engineer-view.webp",
+    sitePanorama: "/images/crop-site-panorama.webp",
+    lattice: "/images/crop-lattice.webp",
+    sitePlans: "/images/crop-site-plans.webp",
+    cityWorks: "/images/crop-city-works.webp",
+  },
 } as const;

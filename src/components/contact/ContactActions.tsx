@@ -1,6 +1,7 @@
 import { ArrowUpLeft, Mail, MapPin, Phone } from "lucide-react";
 import { contact, contactLinks } from "@/config/contact";
-import { WhatsAppIcon } from "@/components/layout/FloatingContactActions";
+import { WhatsAppIcon } from "@/components/ui/BrandIcons";
+export { SocialLinks } from "./SocialLinks";
 
 export function ContactActions({ cards = false }: { cards?: boolean }) {
   const hasContacts = Boolean(contactLinks.phone || contactLinks.whatsapp || contactLinks.email);
@@ -10,11 +11,6 @@ export function ContactActions({ cards = false }: { cards?: boolean }) {
     {contactLinks.phone && <a className={cards ? "contact-card" : "button button--outline"} href={contactLinks.phone}><Phone size={25} aria-hidden="true" /><span><strong>اتصال مباشر</strong>{cards && <small dir="ltr">{contact.phone}</small>}</span><ArrowUpLeft size={20} aria-hidden="true" /></a>}
     {contactLinks.email && <a className={cards ? "contact-card" : "button button--outline"} href={contactLinks.email}><Mail size={25} aria-hidden="true" /><span><strong>البريد الإلكتروني</strong>{cards && <small>{contact.email}</small>}</span><ArrowUpLeft size={20} aria-hidden="true" /></a>}
   </div>;
-}
-
-export function SocialLinks() {
-  if (!contact.socialLinks.length) return null;
-  return <div className="social-links" aria-label="حساباتنا الرسمية">{contact.socialLinks.map(s => <a key={s.url} href={s.url} target="_blank" rel="noopener noreferrer">{s.label}<ArrowUpLeft size={18} aria-hidden="true" /></a>)}</div>;
 }
 
 export function CompanyLocation() {

@@ -1,0 +1,14 @@
+.root { --social-ink: #071d37; --social-border: #b7a58280; --social-surface: #ffffff5c; --social-muted: #586371; padding-block: 28px; }
+.heading { font-size: 17px; line-height: 1.8; margin-block-end: 18px; color: var(--social-ink); }
+.grid { display: flex; flex-wrap: wrap; gap: 16px; }
+.item { display: flex; flex-direction: column; align-items: center; gap: 9px; }
+.icon { display: grid; place-items: center; width: 56px; height: 56px; padding: 0; border: 1px solid var(--social-border); border-radius: 15px; color: var(--social-ink); background: var(--social-surface); box-shadow: inset 0 1px 0 #ffffff38; transition: background .25s, border-color .25s, transform .25s; }
+.icon:hover { background: #d7b475; border-color: #d7b475; color: #071d37; transform: translateY(-3px); }
+.icon:active { transform: translateY(0) scale(.97); }
+.label { font-size: 11px; color: var(--social-muted); }
+.note { color: var(--social-muted); font-size: 11px; line-height: 2; margin-block-start: 17px; max-width: 380px; }
+.compact { --social-ink: #e9ddc7; --social-border: #d7b47555; --social-surface: #ffffff05; --social-muted: #bac7d3; padding: 0; }
+.compact .grid { gap: 10px; }
+.compact .icon { width: 46px; height: 46px; border-radius: 12px; }
+.compact .note { margin-block-start: 10px; font-size: 10px; }
+@media (prefers-reduced-motion: reduce) { .icon { transition: none; } }
