@@ -18,7 +18,7 @@ for (const width of [360, 390, 768, 1280, 1440]) {
     await expect(dock.locator("[data-contact-action]")).toHaveCount(2);
     await expect(dock.getByRole("link", { name: /اتصال مباشر/ })).toHaveAttribute("href", "tel:+966592772128");
     await expect(page.locator('a[href="mailto:info@alwafigc.sa"]').first()).toBeVisible();
-    await expect(page.locator('a[href*="wa.me"]')).toHaveCount(0);
+    await expect(dock.getByRole("link", { name: /التواصل عبر واتساب/ })).toHaveAttribute("href", /^https:\/\/wa\.me\/966560760092\?text=/);
     for (const control of await dock.locator("[data-contact-action]").all()) {
       const bounds = await control.boundingBox();
       expect(bounds).not.toBeNull();
@@ -47,28 +47,19 @@ test("empty social profiles explain their pending state without navigating", asy
   await expect(footer.getByRole("status")).toContainText("سيُضاف رابط لينكدإن الرسمي عند توفره");
 });
 
-test("floating placeholders open notices, close with Escape, and return focus", async ({ page }) => {
-  await page.setViewportSize({ width: 360, height: 800 });
+test("floating phone and WhatsApp links use approved international destinations", async ({ page }) => {
   const site = new SitePage(page);
   await site.visit("/contact");
   const dock = page.getByRole("complementary", { name: "تواصل مباشر" });
-  const whatsapp = dock.getByRole("button", { name: /التواصل عبر واتساب/ });
-  const phone = dock.getByRole("link", { name: /اتصال مباشر/ });
-  await expect(phone).toHaveAttribute("href", "tel:+966592772128");
-  await whatsapp.click();
-  await expect(dock.getByRole("status")).toContainText("سيُضاف رقم واتساب الرسمي");
-  await expect(whatsapp).toHaveAttribute("aria-expanded", "true");
-  await page.keyboard.press("Escape");
-  await expect(dock.getByRole("status")).toHaveCount(0);
-  await expect(whatsapp).toBeFocused();
-  await whatsapp.click();
-  await expect(dock.getByRole("status")).toContainText("سيُضاف رقم واتساب الرسمي");
-  await site.assertNoOverflow();
-  await dock.getByRole("button", { name: "إغلاق تنبيه التواصل" }).click();
-  await expect(whatsapp).toBeFocused();
-  await whatsapp.click();
-  await page.getByRole("heading", { level: 1 }).click();
-  await expect(dock.getByRole("status")).toHaveCount(0);
+  await expect(dock.getByRole("button")).toHaveCount(0);
+  await expect(dock.getByRole("link", { name: /اتصال مباشر/ })).toHaveAttribute("href", "tel:+966592772128");
+  const whatsapp = dock.getByRole("link", { name: /التواصل عبر واتساب/ });
+  const destination = new URL((await whatsapp.getAttribute("href"))!);
+  expect(destination.origin).toBe("https://wa.me");
+  expect(destination.pathname).toBe("/966560760092");
+  expect(destination.searchParams.get("text")).toContain("السلام عليكم");
+  await expect(whatsapp).toHaveAttribute("target", "_blank");
+  await expect(whatsapp).toHaveAttribute("rel", /noopener/);
 });
 
 test("exactly two global contact actions and social footer exist on every page", async ({ page }) => {

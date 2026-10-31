@@ -14,7 +14,7 @@ export interface ContactConfig {
 // Add business-approved values only. Numbers must use international E.164 format.
 export const contact: ContactConfig = {
   phone: "+966592772128",
-  whatsapp: null,
+  whatsapp: "+966560760092",
   whatsappMessage: "السلام عليكم، أرغب في التواصل مع الوافي بخصوص مشروع.",
   email: "info@alwafigc.sa",
   address: null,
