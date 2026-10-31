@@ -16,7 +16,9 @@ for (const width of [360, 390, 768, 1280, 1440]) {
     await expect(social.getByRole("link")).toHaveCount(0);
     const dock = page.getByRole("complementary", { name: "تواصل مباشر" });
     await expect(dock.locator("[data-contact-action]")).toHaveCount(2);
-    await expect(page.locator('a[href^="tel:"], a[href*="wa.me"]')).toHaveCount(0);
+    await expect(dock.getByRole("link", { name: /اتصال مباشر/ })).toHaveAttribute("href", "tel:+966592772128");
+    await expect(page.locator('a[href="mailto:info@alwafigc.sa"]').first()).toBeVisible();
+    await expect(page.locator('a[href*="wa.me"]')).toHaveCount(0);
     for (const control of await dock.locator("[data-contact-action]").all()) {
       const bounds = await control.boundingBox();
       expect(bounds).not.toBeNull();
@@ -51,18 +53,19 @@ test("floating placeholders open notices, close with Escape, and return focus", 
   await site.visit("/contact");
   const dock = page.getByRole("complementary", { name: "تواصل مباشر" });
   const whatsapp = dock.getByRole("button", { name: /التواصل عبر واتساب/ });
-  const phone = dock.getByRole("button", { name: /اتصال مباشر/ });
+  const phone = dock.getByRole("link", { name: /اتصال مباشر/ });
+  await expect(phone).toHaveAttribute("href", "tel:+966592772128");
   await whatsapp.click();
   await expect(dock.getByRole("status")).toContainText("سيُضاف رقم واتساب الرسمي");
   await expect(whatsapp).toHaveAttribute("aria-expanded", "true");
   await page.keyboard.press("Escape");
   await expect(dock.getByRole("status")).toHaveCount(0);
   await expect(whatsapp).toBeFocused();
-  await phone.click();
-  await expect(dock.getByRole("status")).toContainText("سيُضاف رقم الاتصال الرسمي");
+  await whatsapp.click();
+  await expect(dock.getByRole("status")).toContainText("سيُضاف رقم واتساب الرسمي");
   await site.assertNoOverflow();
   await dock.getByRole("button", { name: "إغلاق تنبيه التواصل" }).click();
-  await expect(phone).toBeFocused();
+  await expect(whatsapp).toBeFocused();
   await whatsapp.click();
   await page.getByRole("heading", { level: 1 }).click();
   await expect(dock.getByRole("status")).toHaveCount(0);

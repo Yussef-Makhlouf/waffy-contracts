@@ -1,5 +1,5 @@
 import { brand } from "@/config/brand";
-import { contact, phoneHref, socialHref } from "@/config/contact";
+import { contact, contactLinks, phoneHref, socialHref } from "@/config/contact";
 import { searchPages, type SearchPath } from "@/content/search";
 import { services, networkCategories } from "@/content/services";
 import { itServiceGroups } from "@/content/network-it";
@@ -21,6 +21,7 @@ export function siteStructuredData(origin: string | null) {
         "@type": "Organization", "@id": organization, name: brand.name, alternateName: brand.englishName,
         ...(origin ? { url: publicUrl(origin, "/"), logo: publicUrl(origin, brand.logo.dark) } : {}),
         ...(phoneHref(contact.phone) ? { telephone: contact.phone } : {}),
+        ...(contactLinks.email ? { email: contact.email } : {}),
         ...(sameAs.length ? { sameAs } : {}),
       },
       {

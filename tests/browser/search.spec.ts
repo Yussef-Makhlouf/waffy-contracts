@@ -27,7 +27,9 @@ for (const route of searchPaths) {
     const site = await page.locator('script[data-site-schema]').evaluate(el => JSON.parse(el.textContent!));
     const organization = site["@graph"].find((node: Record<string, unknown>) => node["@type"] === "Organization");
     expect(organization.name).toBe("الوافي للمقاولات العامة");
-    for (const field of ["address", "aggregateRating", "review", "openingHours", "telephone", "sameAs", "areaServed"]) expect(organization[field]).toBeUndefined();
+    expect(organization.telephone).toBe("+966592772128");
+    expect(organization.email).toBe("info@alwafigc.sa");
+    for (const field of ["address", "aggregateRating", "review", "openingHours", "sameAs", "areaServed"]) expect(organization[field]).toBeUndefined();
     const schema = await page.locator('script[data-page-schema]').evaluate(el => JSON.parse(el.textContent!));
     const nodes = schema["@graph"];
     const faq = nodes.find((node: Record<string, unknown>) => node["@type"] === "FAQPage");
@@ -85,7 +87,7 @@ test("robots, sitemap, and sharing images follow the configured launch state", a
     expect(robots).toContain(`Sitemap: ${origin}/sitemap.xml`);
     expect(sitemap.match(/<loc>/g)).toHaveLength(searchPaths.length);
     for (const path of searchPaths) expect(sitemap).toContain(`<loc>${origin}${path}</loc>`);
-    expect(sitemap.match(/<lastmod>2026-10-30<\/lastmod>/g)).toHaveLength(searchPaths.length);
+    for (const path of searchPaths) expect(sitemap).toContain(`<lastmod>${searchPages[path].updated}</lastmod>`);
   } else {
     expect(robots).toContain("Disallow: /");
     expect(robots).not.toContain("Sitemap:");

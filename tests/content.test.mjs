@@ -8,7 +8,8 @@ test('missing and malformed numbers never produce live contact destinations', ()
     assert.equal(phoneHref(number), null);
     assert.equal(whatsappHref(number), null);
   }
-  assert.equal(contactLinks.phone, null);
+  assert.equal(contactLinks.phone, 'tel:+966592772128');
+  assert.equal(contactLinks.email, 'mailto:info@alwafigc.sa');
   assert.equal(contactLinks.whatsapp, null);
 });
 test('social slots remain unlinked until valid official HTTPS destinations are configured', () => {

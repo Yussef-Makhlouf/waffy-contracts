@@ -72,8 +72,9 @@ test("internal navigation, missing contacts, keyboard access, and metadata are v
   await expect(page.getByRole("main")).toBeFocused();
   const links = await page.getByRole("link").evaluateAll(elements => [...new Set(elements.map(el => el.getAttribute("href")).filter((href): href is string => Boolean(href?.startsWith("/") && !href.startsWith("//"))))]);
   for (const href of links) expect((await request.get(href.split("#")[0])).status()).toBe(200);
-  await expect(page.getByRole("complementary", { name: "تواصل مباشر" }).getByRole("button")).toHaveCount(2);
-  await expect(page.locator('a[href^="tel:"], a[href*="wa.me"]')).toHaveCount(0);
+  await expect(page.getByRole("complementary", { name: "تواصل مباشر" }).getByRole("button")).toHaveCount(1);
+  await expect(page.locator('a[href="tel:+966592772128"]').first()).toBeVisible();
+  await expect(page.locator('a[href*="wa.me"]')).toHaveCount(0);
   for (const route of routes) {
     await site.visit(route);
     await expect(page).toHaveTitle(/الوافي/);
